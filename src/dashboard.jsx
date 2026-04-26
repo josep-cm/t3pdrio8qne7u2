@@ -11,17 +11,19 @@ const NAV_ITEMS = [
   { id:"soporte", label:"Soporte", ic: I.Help, group:"cuenta" },
 ];
 
-function Sidebar({ active, setActive, onLogout }) {
+function Sidebar({ active, setActive, onLogout, collapsed, onToggle }) {
   const main = NAV_ITEMS.filter(n => n.group === "main");
   const cuenta = NAV_ITEMS.filter(n => n.group === "cuenta");
   return (
     <aside className="sidebar">
-      <div className="sb-brand"><Logo size="sm"/></div>
+      <div className="sb-brand">
+        <Logo size="sm"/>
+      </div>
       <div className="sb-section">Plataforma</div>
       {main.map(it => {
         const Icon = it.ic;
         return (
-          <div key={it.id} className={"sb-item " + (active === it.id ? "active" : "")} onClick={() => setActive(it.id)}>
+          <div key={it.id} className={"sb-item " + (active === it.id ? "active" : "")} onClick={() => setActive(it.id)} title={collapsed ? it.label : ""}>
             <Icon className="ic"/> <span>{it.label}</span>
           </div>
         );
@@ -30,30 +32,37 @@ function Sidebar({ active, setActive, onLogout }) {
       {cuenta.map(it => {
         const Icon = it.ic;
         return (
-          <div key={it.id} className={"sb-item " + (active === it.id ? "active" : "")} onClick={() => setActive(it.id)}>
+          <div key={it.id} className={"sb-item " + (active === it.id ? "active" : "")} onClick={() => setActive(it.id)} title={collapsed ? it.label : ""}>
             <Icon className="ic"/> <span>{it.label}</span>
           </div>
         );
       })}
       <div className="sb-spacer"/>
-      <div className="card-flat" style={{padding:14,margin:"12px 6px",background:"var(--paper)"}}>
+      <div className="sb-help" style={{padding:14,margin:"12px 6px",background:"var(--paper)",border:"1px solid var(--rule)",borderRadius:"var(--r-md)"}}>
         <div className="mono" style={{fontSize:10}}>NECESITAS AYUDA</div>
         <div style={{fontFamily:"var(--display)",fontSize:18,marginTop:6,letterSpacing:"-.01em",lineHeight:1.15}}>Habla con un asesor humano.</div>
         <button className="btn btn-primary btn-sm" style={{width:"100%",marginTop:10}} onClick={() => setActive("soporte")}>Contactar</button>
       </div>
-      <div className="sb-item" onClick={onLogout} style={{marginTop:4}}>
-        <I.Logout className="ic"/> <span>Cerrar sesión</span>
+      <div className="sb-item" onClick={onLogout} style={{marginTop:4}} title={collapsed ? "Cerrar sesión" : ""}>
+        <I.Logout className="ic"/> <span className="sb-logout-label">Cerrar sesión</span>
       </div>
     </aside>
   );
 }
 
-function TopBar({ active, setActive, user }) {
+function TopBar({ active, setActive, onToggleSidebar, user }) {
   const it = NAV_ITEMS.find(n => n.id === active);
   return (
-    <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 32px",height:64,borderBottom:"1px solid var(--rule-2)",background:"var(--canvas)",position:"sticky",top:0,zIndex:20,gap:16}}>
-      <div className="crumbs" style={{fontFamily:"var(--mono)",fontSize:13,color:"var(--ink-mute)",letterSpacing:".06em",textTransform:"uppercase",whiteSpace:"nowrap"}}>
-        SeguroDirecto / {it ? it.label : ""}
+    <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 24px",height:64,borderBottom:"1px solid var(--rule-2)",background:"var(--canvas)",position:"sticky",top:0,zIndex:20,gap:16}}>
+      <div style={{display:"flex",alignItems:"center",gap:12}}>
+        <button onClick={onToggleSidebar} className="iconbtn" title="Mostrar/ocultar menú" style={{flexShrink:0}}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+            <path d="M3 6h18M3 12h18M3 18h18"/>
+          </svg>
+        </button>
+        <div className="crumbs" style={{fontFamily:"var(--mono)",fontSize:13,color:"var(--ink-mute)",letterSpacing:".06em",textTransform:"uppercase",whiteSpace:"nowrap"}}>
+          SeguroDirecto / {it ? it.label : ""}
+        </div>
       </div>
       <div style={{display:"flex",alignItems:"center",gap:8,flexShrink:0}}>
         <div className="topbar-search" style={{position:"relative",width:280,display:"flex",alignItems:"center"}}>
@@ -215,11 +224,12 @@ function DashboardHome({ user, setActive }) {
 
 function DashboardShell({ user, onLogout, initial = "inicio" }) {
   const [active, setActive] = React.useState(initial);
+  const [collapsed, setCollapsed] = React.useState(false);
   return (
-    <div className="app-shell">
-      <Sidebar active={active} setActive={setActive} onLogout={onLogout}/>
+    <div className={"app-shell" + (collapsed ? " collapsed" : "")}>
+      <Sidebar active={active} setActive={setActive} onLogout={onLogout} collapsed={collapsed} onToggle={() => setCollapsed(v => !v)}/>
       <div className="app-main">
-        <TopBar active={active} setActive={setActive} user={user}/>
+        <TopBar active={active} setActive={setActive} onToggleSidebar={() => setCollapsed(v => !v)} user={user}/>
         {active === "inicio" && <DashboardHome user={user} setActive={setActive}/>}
         {active === "comparar" && <Comparador setActive={setActive}/>}
         {active === "mis-seguros" && <MisSeguros setActive={setActive}/>}
