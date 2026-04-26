@@ -7,8 +7,10 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
 }/*EDITMODE-END*/;
 
 function App() {
-  const [route, setRoute] = React.useState("home"); // home | login | register | onboarding | app
-  const [user, setUser] = React.useState(null);
+  const savedRoute = sessionStorage.getItem("sd_route");
+  const savedUser = (() => { try { return JSON.parse(sessionStorage.getItem("sd_user")); } catch { return null; } })();
+  const [route, setRoute] = React.useState(savedRoute || "home");
+  const [user, setUser] = React.useState(savedUser || null);
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
 
   React.useEffect(() => {
@@ -17,13 +19,21 @@ function App() {
     if (t.displayFont) document.documentElement.style.setProperty("--display", `'${t.displayFont}', 'Times New Roman', serif`);
   }, [t.theme, t.accent, t.displayFont]);
 
-  React.useEffect(() => { window.scrollTo(0, 0); }, [route]);
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+    sessionStorage.setItem("sd_route", route);
+  }, [route]);
+
+  React.useEffect(() => {
+    if (user) sessionStorage.setItem("sd_user", JSON.stringify(user));
+    else sessionStorage.removeItem("sd_user");
+  }, [user]);
 
   const go = (r) => setRoute(r);
   const onLogin = (u) => { setUser(u); setRoute("app"); };
   const onRegister = (u) => { setUser(u); setRoute("onboarding"); };
   const onFinish = () => setRoute("app");
-  const onLogout = () => { setUser(null); setRoute("home"); };
+  const onLogout = () => { setUser(null); setRoute("home"); sessionStorage.removeItem("sd_route"); sessionStorage.removeItem("sd_user"); };
 
   return (
     <>
