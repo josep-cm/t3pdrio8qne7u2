@@ -107,13 +107,13 @@ function Renovaciones() {
       </div>
 
       <div className="card" style={{padding:0,overflow:"hidden"}}>
-        <div style={{display:"grid",gridTemplateColumns:"60px 1.5fr 1fr 1fr 1fr auto",gap:16,padding:"14px 24px",background:"var(--canvas-2)",borderBottom:"1px solid var(--rule)",fontFamily:"var(--mono)",fontSize:11,letterSpacing:".08em",textTransform:"uppercase",color:"var(--ink-mute)"}}>
+        <div className="renov-header" style={{display:"grid",gridTemplateColumns:"60px 1.5fr 1fr 1fr 1fr auto",gap:16,padding:"14px 24px",background:"var(--canvas-2)",borderBottom:"1px solid var(--rule)",fontFamily:"var(--mono)",fontSize:11,letterSpacing:".08em",textTransform:"uppercase",color:"var(--ink-mute)"}}>
           <span></span><span>Póliza</span><span>Compañía</span><span>Renueva</span><span style={{textAlign:"right"}}>Precio</span><span></span>
         </div>
         {sorted.map((p, i) => {
           const Icon = p.ic;
           return (
-            <div key={p.id} style={{display:"grid",gridTemplateColumns:"60px 1.5fr 1fr 1fr 1fr auto",gap:16,padding:"18px 24px",alignItems:"center",borderBottom: i < sorted.length-1 ? "1px solid var(--rule-2)" : "none"}}>
+            <div key={p.id} className="renov-row" style={{display:"grid",gridTemplateColumns:"60px 1.5fr 1fr 1fr 1fr auto",gap:16,padding:"18px 24px",alignItems:"center",borderBottom: i < sorted.length-1 ? "1px solid var(--rule-2)" : "none"}}>
               <div className="pol-logo" style={{width:36,height:36}}><Icon size={18}/></div>
               <div>
                 <div style={{fontFamily:"var(--display)",fontSize:20,letterSpacing:"-.01em"}}>{p.name}</div>
@@ -133,6 +133,14 @@ function Renovaciones() {
           );
         })}
       </div>
+      <style>{`
+        @media(max-width:760px){
+          .renov-header{display:none !important}
+          .renov-row{grid-template-columns:44px 1fr !important;grid-template-rows:auto auto auto;gap:8px 12px !important;padding:16px !important}
+          .renov-row > :nth-child(3),.renov-row > :nth-child(4),.renov-row > :nth-child(5){display:none}
+          .renov-row > :nth-child(6){grid-column:2;justify-content:flex-start}
+        }
+      `}</style>
     </div>
   );
 }

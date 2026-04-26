@@ -62,7 +62,7 @@ function OnboardingFlow({ onFinish, go }) {
             <div>
               <h1 className="ob-h1" style={{margin:"16px 0"}}>Vamos a preparar tu cuenta en menos de <em>dos minutos</em>.</h1>
               <p className="ob-sub">Necesitamos unos datos básicos para mostrarte solo opciones que tengan sentido para ti. Puedes editarlos cuando quieras desde tu perfil.</p>
-              <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:14,marginTop:8}}>
+              <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:14,marginTop:8}} className="ob-welcome-grid">
                 {[{n:"01",t:"Datos personales"},{n:"02",t:"Vehículos y vivienda"},{n:"03",t:"Tus intereses"}].map(b => (
                   <div key={b.n} className="card-flat" style={{padding:18}}>
                     <div className="mono" style={{fontSize:10}}>{b.n}</div>
@@ -211,5 +211,13 @@ function OnboardingFlow({ onFinish, go }) {
     </div>
   );
 }
+
+// Mobile responsive styles for onboarding
+const obStyle = document.createElement("style");
+obStyle.textContent = `
+  @media(max-width:560px){.ob-welcome-grid{grid-template-columns:1fr !important}}
+  @media(max-width:640px){.ob-top{padding:16px !important}.ob-body{padding:24px 16px !important}}
+`;
+document.head.appendChild(obStyle);
 
 Object.assign(window, { OnboardingFlow });

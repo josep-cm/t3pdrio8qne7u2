@@ -143,7 +143,15 @@ function Perfil({ user }) {
           )}
         </div>
       </div>
-      <style>{`@media(max-width:880px){.prof-grid{grid-template-columns:1fr !important}}`}</style>
+      <style>{`
+        @media(max-width:880px){
+          .prof-grid{grid-template-columns:1fr !important}
+          .prof-grid aside{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
+          .prof-grid aside > div:first-child{flex:1;min-width:200px}
+          .prof-grid aside > div:last-child{flex:2;min-width:200px;display:flex;flex-direction:row;flex-wrap:wrap;gap:4px}
+          .prof-grid aside > div:last-child button{flex:1;min-width:120px}
+        }
+      `}</style>
     </div>
   );
 }
@@ -224,7 +232,10 @@ function Soporte() {
           <button className="btn btn-blue">Enviar mensaje <I.ArrowRight size={14}/></button>
         </div>
       </PerfSection>
-      <style>{`@media(max-width:880px){.sup-grid{grid-template-columns:1fr !important}}`}</style>
+      <style>{`
+        @media(max-width:880px){.sup-grid{grid-template-columns:1fr !important}}
+        @media(min-width:560px) and (max-width:880px){.sup-grid{grid-template-columns:repeat(3,1fr) !important}}
+      `}</style>
     </div>
   );
 }

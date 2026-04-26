@@ -56,7 +56,7 @@ function TopBar({ active, user }) {
         <div className="crumbs">SeguroDirecto / {it ? it.label : ""}</div>
       </div>
       <div className="right">
-        <div style={{position:"relative",width:280}}>
+        <div className="search-wrap">
           <input className="input" placeholder="Busca un seguro, documento…" style={{height:36,fontSize:13,paddingLeft:36}}/>
           <I.Search size={14} className="ic" style={{position:"absolute",left:12,top:11,color:"var(--ink-mute)"}}/>
         </div>
@@ -64,6 +64,30 @@ function TopBar({ active, user }) {
         <div className="avatar">{(user?.email || "U")[0].toUpperCase()}</div>
       </div>
     </div>
+  );
+}
+
+const MOB_NAV = [
+  { id:"inicio", label:"Inicio", ic: I.Home },
+  { id:"comparar", label:"Comparar", ic: I.Search },
+  { id:"mis-seguros", label:"Seguros", ic: I.Shield },
+  { id:"perfil", label:"Perfil", ic: I.User },
+];
+
+function MobNav({ active, setActive }) {
+  return (
+    <nav className="mob-nav">
+      {MOB_NAV.map(it => {
+        const Icon = it.ic;
+        return (
+          <button key={it.id} className={"mob-nav-item " + (active === it.id ? "active" : "")}
+            onClick={() => setActive(it.id)}>
+            <Icon size={22}/>
+            <span>{it.label}</span>
+          </button>
+        );
+      })}
+    </nav>
   );
 }
 
@@ -157,7 +181,7 @@ function DashboardHome({ user, setActive }) {
             <h3 className="display" style={{fontSize:28,margin:"6px 0 0",letterSpacing:"-.01em"}}>Lo que probablemente buscabas.</h3>
           </div>
         </div>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12}}>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:12}} className="shortcuts-grid">
           {[
             {ic:I.Plus,t:"Contratar nuevo",d:"Compara y firma online", page:"comparar"},
             {ic:I.Doc,t:"Subir póliza existente",d:"Centraliza lo que ya tienes", page:"documentos"},
@@ -175,7 +199,11 @@ function DashboardHome({ user, setActive }) {
           })}
         </div>
       </div>
-      <style>{`@media(max-width:980px){.dh-grid{grid-template-columns:1fr !important}}`}</style>
+      <style>{`
+        @media(max-width:980px){.dh-grid{grid-template-columns:1fr !important}}
+        @media(max-width:880px){.shortcuts-grid{grid-template-columns:repeat(2,1fr) !important}}
+        @media(max-width:480px){.shortcuts-grid{grid-template-columns:1fr !important}}
+      `}</style>
     </div>
   );
 }
@@ -196,6 +224,7 @@ function DashboardShell({ user, onLogout, initial = "inicio" }) {
         {active === "ajustes" && <Ajustes/>}
         {active === "soporte" && <Soporte/>}
       </div>
+      <MobNav active={active} setActive={setActive}/>
     </div>
   );
 }

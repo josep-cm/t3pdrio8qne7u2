@@ -213,7 +213,7 @@ function Comparador({ setActive }) {
                       </div>
                     </div>
                   </div>
-                  <div style={{display:"flex",flexDirection:"column",alignItems:"flex-end",gap:8,minWidth:180}}>
+                  <div className="cmp-price-col" style={{display:"flex",flexDirection:"column",alignItems:"flex-end",gap:8}}>
                     <div style={{textAlign:"right"}}>
                       <div style={{fontFamily:"var(--display)",fontSize:38,lineHeight:1,letterSpacing:"-.01em"}}>{r.m} €<span style={{fontFamily:"var(--sans)",fontSize:13,color:"var(--ink-mute)"}}>/mes</span></div>
                       <div className="mono" style={{fontSize:10,marginTop:4}}>O {r.y} € / AÑO</div>
@@ -227,7 +227,13 @@ function Comparador({ setActive }) {
               ))}
             </div>
           </div>
-          <style>{`@media(max-width:980px){.cmp-grid{grid-template-columns:1fr !important}}`}</style>
+          <style>{`
+            @media(max-width:980px){.cmp-grid{grid-template-columns:1fr !important}}
+            @media(max-width:640px){
+              .cmp-card{grid-template-columns:1fr !important}
+              .cmp-price-col{align-items:flex-start !important;flex-direction:row !important;justify-content:space-between !important;flex-wrap:wrap;gap:10px !important;padding-top:12px;border-top:1px solid var(--rule-2)}
+            }
+          `}</style>
         </div>
       )}
     </div>
