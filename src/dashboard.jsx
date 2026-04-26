@@ -51,18 +51,21 @@ function Sidebar({ active, setActive, onLogout }) {
 function TopBar({ active, setActive, user }) {
   const it = NAV_ITEMS.find(n => n.id === active);
   return (
-    <div className="app-top">
-      <div>
-        <div className="crumbs">SeguroDirecto / {it ? it.label : ""}</div>
+    <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 32px",height:64,borderBottom:"1px solid var(--rule-2)",background:"var(--canvas)",position:"sticky",top:0,zIndex:20,gap:16}}>
+      <div className="crumbs" style={{fontFamily:"var(--mono)",fontSize:13,color:"var(--ink-mute)",letterSpacing:".06em",textTransform:"uppercase",whiteSpace:"nowrap"}}>
+        SeguroDirecto / {it ? it.label : ""}
       </div>
-      <div className="right" style={{display:"flex",alignItems:"center",gap:10}}>
-        <div className="search-wrap" style={{position:"relative",width:280}}>
-          <input className="input" placeholder="Busca un seguro, documento…" style={{height:36,fontSize:13,paddingLeft:36}}/>
-          <I.Search size={14} style={{position:"absolute",left:12,top:"50%",transform:"translateY(-50%)",color:"var(--ink-mute)",pointerEvents:"none"}}/>
+      <div style={{display:"flex",alignItems:"center",gap:8,flexShrink:0}}>
+        <div className="topbar-search" style={{position:"relative",width:280}}>
+          <input className="input" placeholder="Busca un seguro, documento…" style={{height:36,fontSize:13,paddingLeft:36,paddingRight:12}}/>
+          <I.Search size={14} className="" style={{position:"absolute",left:12,top:"50%",transform:"translateY(-50%)",color:"var(--ink-mute)",pointerEvents:"none",display:"block"}}/>
         </div>
-        <button className="iconbtn"><I.Bell size={16}/></button>
-        <div className="avatar" onClick={() => setActive("perfil")} style={{cursor:"pointer"}} title="Mi perfil">{(user?.email || "U")[0].toUpperCase()}</div>
+        <button className="iconbtn" style={{flexShrink:0}}><I.Bell size={16} className=""/></button>
+        <div style={{width:36,height:36,borderRadius:"50%",background:"linear-gradient(135deg,var(--blue),var(--ink))",color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,fontWeight:600,cursor:"pointer",flexShrink:0}} onClick={() => setActive("perfil")} title="Mi perfil">
+          {(user?.email || "U")[0].toUpperCase()}
+        </div>
       </div>
+      <style>{`@media(max-width:640px){.topbar-search{display:none!important}}`}</style>
     </div>
   );
 }
