@@ -32,7 +32,7 @@ function LoginScreen({ go, onLogin }) {
         <div className="auth-card fadeUp">
           <div style={{marginBottom:32}}>
             <span className="eyebrow">Bienvenido de vuelta</span>
-            <h1 className="display" style={{fontSize:56,margin:"8px 0 0"}}>Iniciar <em style={{color:"var(--blue)",fontStyle:"italic"}}>sesión</em></h1>
+            <h1 className="display" style={{fontSize:"clamp(36px,7vw,56px)",margin:"8px 0 0"}}>Iniciar <em style={{color:"var(--blue)",fontStyle:"italic"}}>sesión</em></h1>
           </div>
           <form onSubmit={submit} style={{display:"flex",flexDirection:"column",gap:16}}>
             <Field label="Email">
@@ -96,7 +96,7 @@ function RegisterScreen({ go, onRegister }) {
         <div className="auth-card fadeUp">
           <div style={{marginBottom:32}}>
             <span className="eyebrow">Crea tu cuenta</span>
-            <h1 className="display" style={{fontSize:56,margin:"8px 0 0"}}>Empieza <em style={{color:"var(--blue)",fontStyle:"italic"}}>aquí</em>.</h1>
+            <h1 className="display" style={{fontSize:"clamp(36px,7vw,56px)",margin:"8px 0 0"}}>Empieza <em style={{color:"var(--blue)",fontStyle:"italic"}}>aquí</em>.</h1>
             <p className="soft" style={{margin:"12px 0 0",fontSize:15,lineHeight:1.55}}>Tu cuenta estará lista en menos de dos minutos.</p>
           </div>
           <form onSubmit={submit} style={{display:"flex",flexDirection:"column",gap:14}}>

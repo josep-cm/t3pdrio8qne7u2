@@ -23,7 +23,7 @@ function PublicHeader({ go, route }) {
             <a key={it.id} onClick={() => scrollTo(it.id)} style={{cursor:"pointer"}}>{it.label}</a>
           ))}
         </nav>
-        <div className="row gap-sm">
+        <div className="pub-hd-actions">
           <button className="btn btn-ghost btn-sm" onClick={() => go("login")}>Iniciar sesión</button>
           <button className="btn btn-primary btn-sm" onClick={() => go("register")}>Registrarse</button>
         </div>
