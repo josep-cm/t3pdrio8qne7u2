@@ -48,20 +48,20 @@ function Sidebar({ active, setActive, onLogout }) {
   );
 }
 
-function TopBar({ active, user }) {
+function TopBar({ active, setActive, user }) {
   const it = NAV_ITEMS.find(n => n.id === active);
   return (
     <div className="app-top">
       <div>
         <div className="crumbs">SeguroDirecto / {it ? it.label : ""}</div>
       </div>
-      <div className="right">
-        <div className="search-wrap">
+      <div className="right" style={{display:"flex",alignItems:"center",gap:10}}>
+        <div className="search-wrap" style={{position:"relative",width:280}}>
           <input className="input" placeholder="Busca un seguro, documento…" style={{height:36,fontSize:13,paddingLeft:36}}/>
-          <I.Search size={14} className="ic" style={{position:"absolute",left:12,top:11,color:"var(--ink-mute)"}}/>
+          <I.Search size={14} style={{position:"absolute",left:12,top:"50%",transform:"translateY(-50%)",color:"var(--ink-mute)",pointerEvents:"none"}}/>
         </div>
         <button className="iconbtn"><I.Bell size={16}/></button>
-        <div className="avatar">{(user?.email || "U")[0].toUpperCase()}</div>
+        <div className="avatar" onClick={() => setActive("perfil")} style={{cursor:"pointer"}} title="Mi perfil">{(user?.email || "U")[0].toUpperCase()}</div>
       </div>
     </div>
   );
@@ -214,7 +214,7 @@ function DashboardShell({ user, onLogout, initial = "inicio" }) {
     <div className="app-shell">
       <Sidebar active={active} setActive={setActive} onLogout={onLogout}/>
       <div className="app-main">
-        <TopBar active={active} user={user}/>
+        <TopBar active={active} setActive={setActive} user={user}/>
         {active === "inicio" && <DashboardHome user={user} setActive={setActive}/>}
         {active === "comparar" && <Comparador setActive={setActive}/>}
         {active === "mis-seguros" && <MisSeguros setActive={setActive}/>}
