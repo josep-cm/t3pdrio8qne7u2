@@ -56,9 +56,11 @@ function TopBar({ active, setActive, user }) {
         SeguroDirecto / {it ? it.label : ""}
       </div>
       <div style={{display:"flex",alignItems:"center",gap:8,flexShrink:0}}>
-        <div className="topbar-search" style={{position:"relative",width:280}}>
-          <input className="input" placeholder="Busca un seguro, documento…" style={{height:36,fontSize:13,paddingLeft:36,paddingRight:12}}/>
-          <I.Search size={14} className="" style={{position:"absolute",left:12,top:"50%",transform:"translateY(-50%)",color:"var(--ink-mute)",pointerEvents:"none",display:"block"}}/>
+        <div className="topbar-search" style={{position:"relative",width:280,display:"flex",alignItems:"center"}}>
+          <svg style={{position:"absolute",left:12,pointerEvents:"none",color:"var(--ink-mute)",zIndex:1}} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+          </svg>
+          <input className="input" placeholder="Busca un seguro, documento…" style={{height:36,fontSize:13,paddingLeft:36,paddingRight:12,width:"100%"}}/>
         </div>
         <button className="iconbtn" style={{flexShrink:0}}><I.Bell size={16} className=""/></button>
         <div style={{width:36,height:36,borderRadius:"50%",background:"linear-gradient(135deg,var(--blue),var(--ink))",color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,fontWeight:600,cursor:"pointer",flexShrink:0}} onClick={() => setActive("perfil")} title="Mi perfil">
