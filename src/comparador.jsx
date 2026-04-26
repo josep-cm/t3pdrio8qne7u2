@@ -171,7 +171,7 @@ function Comparador({ setActive }) {
       {phase === "results" && (
         <div className="fadeUp">
           <div style={{display:"grid",gridTemplateColumns:"260px 1fr",gap:24}} className="cmp-grid">
-            <aside className="card" style={{padding:20,height:"fit-content",position:"sticky",top:88}}>
+            <aside className="card cmp-filters" style={{padding:20,height:"fit-content",position:"sticky",top:88}}>
               <div className="mono" style={{fontSize:11,marginBottom:10}}><I.Filter size={12} style={{verticalAlign:"-2px",marginRight:4}}/> Filtros</div>
               <Field label="Ordenar por">
                 <Select value={filters.sortBy} onChange={e => setFilters({...filters, sortBy:e.target.value})}>
@@ -228,7 +228,10 @@ function Comparador({ setActive }) {
             </div>
           </div>
           <style>{`
-            @media(max-width:980px){.cmp-grid{grid-template-columns:1fr !important}}
+            @media(max-width:980px){
+              .cmp-grid{grid-template-columns:1fr !important}
+              .cmp-filters{position:static !important}
+            }
             @media(max-width:640px){
               .cmp-card{grid-template-columns:1fr !important}
               .cmp-price-col{align-items:flex-start !important;flex-direction:row !important;justify-content:space-between !important;flex-wrap:wrap;gap:10px !important;padding-top:12px;border-top:1px solid var(--rule-2)}
